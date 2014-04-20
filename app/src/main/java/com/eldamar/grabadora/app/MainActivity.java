@@ -17,10 +17,11 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -99,6 +100,11 @@ public class MainActivity extends ActionBarActivity
             return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(String id) {
+        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -114,14 +120,15 @@ public class MainActivity extends ActionBarActivity
          * number.
          */
         public static Fragment newInstance(int sectionNumber) {
-            if (sectionNumber == 0) {
-                return new RecordFragment();
-            } else {
-                PlaceholderFragment fragment = new PlaceholderFragment();
-                Bundle args = new Bundle();
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber + 1);
-                fragment.setArguments(args);
-                return fragment;
+            switch(sectionNumber) {
+                case 0: return new RecordFragment();
+                case 1: return new RecordsFragment();
+                default:
+                    PlaceholderFragment fragment = new PlaceholderFragment();
+                    Bundle args = new Bundle();
+                    args.putInt(ARG_SECTION_NUMBER, sectionNumber + 1);
+                    fragment.setArguments(args);
+                    return fragment;
             }
         }
 
