@@ -2,12 +2,19 @@
 <resources>
 
     <string name="app_name">Grabadora</string>
-    <string name="title_section1">Grabaciones</string>
-    <string name="title_section2">Configuración</string>
-    <string name="title_section3">Acerca de</string>
+    <string name="title_section1">Grabar</string>
+    <string name="title_section2">Grabaciones</string>
+    <string name="title_section3">Configuración</string>
+    <string name="title_section4">Acerca de</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="record">Grabar</string>
+    <string name="stop">Detener</string>
+    <string name="title_activity_save_file">SaveFileActivity</string>
+    <string name="file_name">Nombre del archivo:</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 
 </resources>

@@ -62,6 +62,9 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
+            case 4:
+                mTitle = getString(R.string.title_section4);
+                break;
         }
     }
 
@@ -110,9 +113,9 @@ public class MainActivity extends ActionBarActivity
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            if (sectionNumber == 1) {
-                return null;
+        public static Fragment newInstance(int sectionNumber) {
+            if (sectionNumber == 0) {
+                return new RecordFragment();
             } else {
                 PlaceholderFragment fragment = new PlaceholderFragment();
                 Bundle args = new Bundle();
@@ -137,5 +140,4 @@ public class MainActivity extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
 }
