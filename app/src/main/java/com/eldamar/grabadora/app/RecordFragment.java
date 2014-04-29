@@ -6,11 +6,13 @@ import java.io.IOException;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 
@@ -21,9 +23,10 @@ import android.widget.Toast;
 public class RecordFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Crear una propioa clase MediaRecorder.
-    private MediaRecorder mRecorder;
-    private File mFile;
     private Button mButton;
+    private Chronometer mChronometer;
+    private File mFile;
+    private MediaRecorder mRecorder;
 
     public RecordFragment() {
         // Required empty public constructor
@@ -36,7 +39,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
         mButton = (Button) view.findViewById(R.id.button);
         mButton.setOnClickListener(this);
-
+        mChronometer = (Chronometer) view.findViewById(R.id.chronometer);
         mRecorder = null;
 
         return view;
@@ -51,10 +54,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
             try {
+                mChronometer.setBase(SystemClock.elapsedRealtime());
                 mFile = File.createTempFile("tmp", ".3pg");
                 mRecorder.setOutputFile(mFile.getAbsolutePath());
                 mRecorder.prepare();
                 mRecorder.start();
+                mChronometer.start();
 
                 mButton.setText(R.string.stop);
 
@@ -68,6 +73,8 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             mRecorder = null;
 
             mButton.setText(R.string.record);
+            mChronometer.stop();
+            mChronometer.setBase(SystemClock.elapsedRealtime());
 
             // TODO: Cerrar el archivo temporal.
             Intent intent = new Intent(getActivity(), SaveFileActivity.class);
