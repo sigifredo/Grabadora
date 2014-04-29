@@ -69,5 +69,4 @@ public class RecordsFragment extends ListFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
-
 }
