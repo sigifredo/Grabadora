@@ -19,11 +19,14 @@ import android.widget.Toast;
  */
 public class PlayFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Crear una propioa clase MediaRecorder.
     private MediaPlayer mMediaPlayer;
     private String mFilePath;
 
     public PlayFragment() {
+    }
+
+    public PlayFragment(String filePath) {
+        mFilePath = filePath;
     }
 
     @Override
@@ -49,10 +52,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         } catch (IOException ex) {
             mMediaPlayer = null;
         }
-    }
-
-    public void setRecordPath(String path) {
-        mFilePath = path;
     }
 
     public void onClick(View view) {

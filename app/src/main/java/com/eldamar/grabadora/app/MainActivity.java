@@ -98,14 +98,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onFragmentInteraction(String id) {
-        // TODO: abrir un reproductor.
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        PlayFragment playFragment = new PlayFragment();
-        playFragment.setRecordPath(id);
-
-        fragmentManager.beginTransaction().replace(R.id.container, playFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(id)).commit();
     }
 
     /**
