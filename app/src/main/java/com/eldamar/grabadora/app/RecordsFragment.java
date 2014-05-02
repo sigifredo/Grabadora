@@ -46,13 +46,12 @@ public class RecordsFragment extends ListFragment {
         mListener = null;
     }
 
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
         if (mListener != null)
-            mListener.onFragmentInteraction(l.getItemAtPosition(position).toString());
+            mListener.onFragmentInteraction(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
     }
 
     /**

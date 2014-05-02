@@ -99,7 +99,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onFragmentInteraction(String id) {
         // TODO: abrir un reproductor.
-        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        PlayFragment playFragment = new PlayFragment();
+        playFragment.setRecordPath(id);
+
+        fragmentManager.beginTransaction().replace(R.id.container, playFragment).commit();
     }
 
     /**

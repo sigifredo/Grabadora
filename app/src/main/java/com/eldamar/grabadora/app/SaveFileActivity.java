@@ -56,7 +56,7 @@ public class SaveFileActivity extends ActionBarActivity {
             File oFile = new File(getFilesDir(), fileName);
 
             if (mFile.renameTo(oFile))
-                Toast.makeText(this, "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Se ha guardaro el archivo satisfactoriamente." + oFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(this, "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_LONG).show();
 
