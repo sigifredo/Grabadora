@@ -1,12 +1,18 @@
 package com.eldamar.grabadora.app;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * A fragment representing a list of Items.
@@ -18,6 +24,8 @@ import android.widget.ListView;
 public class RecordsFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
+    private boolean mOnSelection;
+    private HashSet<Integer> mItemsSelected;
 
     public RecordsFragment() {
     }
@@ -28,6 +36,9 @@ public class RecordsFragment extends ListFragment {
 
         String [] files = getActivity().fileList();
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, files));
+
+        mOnSelection = false;
+        mItemsSelected = new HashSet<Integer>();
     }
 
     @Override
@@ -64,11 +75,31 @@ public class RecordsFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (mListener != null)
+        if (mOnSelection)
+        {
+            int color;
+
+            if (mItemsSelected.contains(position)) {
+                color = getResources().getColor(android.R.color.transparent);
+                mItemsSelected.remove(position);
+
+                if (mItemsSelected.isEmpty())
+                    mOnSelection = false;
+            }
+            else {
+                color = getResources().getColor(R.color.selected);
+                mItemsSelected.add(position);
+            }
+
+            v.setBackgroundColor(color);
+        } else if (mListener != null)
             mListener.onFragmentInteraction(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
     }
 
     public void onListItemLongClick(ListView l, View v, int position, long id) {
+        v.setBackgroundColor(getResources().getColor(R.color.selected));
+        mItemsSelected.add(position);
+        mOnSelection = true;
     }
 
     /**
