@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,6 +31,19 @@ public class RecordsFragment extends ListFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                onListItemLongClick((ListView) parent, v, position, id);
+                return true;
+            }
+        });
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -52,6 +66,9 @@ public class RecordsFragment extends ListFragment {
 
         if (mListener != null)
             mListener.onFragmentInteraction(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
+    }
+
+    public void onListItemLongClick(ListView l, View v, int position, long id) {
     }
 
     /**
