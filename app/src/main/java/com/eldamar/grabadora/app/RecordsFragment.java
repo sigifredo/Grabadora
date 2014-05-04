@@ -77,21 +77,16 @@ public class RecordsFragment extends ListFragment {
 
         if (mOnSelection)
         {
-            int color;
-
             if (mItemsSelected.contains(position)) {
-                color = getResources().getColor(android.R.color.transparent);
+                v.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 mItemsSelected.remove(position);
 
                 if (mItemsSelected.isEmpty())
                     mOnSelection = false;
-            }
-            else {
-                color = getResources().getColor(R.color.selected);
+            } else {
+                v.setBackgroundColor(getResources().getColor(R.color.selected));
                 mItemsSelected.add(position);
             }
-
-            v.setBackgroundColor(color);
         } else if (mListener != null)
             mListener.onFragmentInteraction(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
     }
