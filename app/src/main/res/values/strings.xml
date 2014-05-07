@@ -16,5 +16,6 @@
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="not_implemented_yet">No implementado aún</string>
+    <string name="delete">Eliminar</string>
 
 </resources>

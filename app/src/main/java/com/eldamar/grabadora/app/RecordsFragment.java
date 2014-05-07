@@ -1,7 +1,6 @@
 package com.eldamar.grabadora.app;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ActionMode;
@@ -15,9 +14,6 @@ import android.widget.ListView;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
 
 /**
  * A fragment representing a list of Items.
