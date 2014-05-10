@@ -14,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.InteractionListener {
@@ -103,7 +105,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void deleteRecords(String [] paths) {
-        Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas. " + paths.length, Toast.LENGTH_LONG).show();
     }
 
     /**

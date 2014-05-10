@@ -12,6 +12,9 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.HashSet;
+import java.util.Iterator;
+
 /**
  * A fragment representing a list of Items.
  * <p />
@@ -40,6 +43,9 @@ public class RecordsFragment extends ListFragment {
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+            HashSet<Integer> mItems = new HashSet<Integer>();
+
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
                 int n = getListView().getCheckedItemCount();
@@ -48,6 +54,11 @@ public class RecordsFragment extends ListFragment {
                     actionMode.setSubtitle("1 " + getString(R.string.file_selected));
                 else
                     actionMode.setSubtitle("" + n + " " + getString(R.string.files_selected));
+
+                if (b)
+                    mItems.add(i);
+                else
+                    mItems.remove(i);
             }
 
             @Override
@@ -66,7 +77,15 @@ public class RecordsFragment extends ListFragment {
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_delete:
-                        mListener.deleteRecords(null);
+                        int i = 0;
+                        Iterator<Integer> it = mItems.iterator();
+                        String [] paths = new String[mItems.size()];
+                        final String activityPath = getActivity().getFilesDir().getAbsolutePath() + "/";
+
+                        while (it.hasNext())
+                            paths[i++] = activityPath + getListAdapter().getItem(it.next());
+
+                        mListener.deleteRecords(paths);
                         actionMode.finish();
                         return true;
                     default:
