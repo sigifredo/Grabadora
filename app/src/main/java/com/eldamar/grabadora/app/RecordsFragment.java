@@ -31,20 +31,23 @@ public class RecordsFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         String [] files = getActivity().fileList();
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, files));
+        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, files));
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ListView listView = getListView();
-
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-                actionMode.setTitle("" + getListView().getCheckedItemCount());
+                int n = getListView().getCheckedItemCount();
+                actionMode.setTitle(R.string.select_items);
+                if (n == 1)
+                    actionMode.setSubtitle("1 " + getString(R.string.file_selected));
+                else
+                    actionMode.setSubtitle("" + n + " " + getString(R.string.files_selected));
             }
 
             @Override
