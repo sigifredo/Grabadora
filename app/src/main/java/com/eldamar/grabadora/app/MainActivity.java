@@ -105,7 +105,16 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void deleteRecords(String [] paths) {
-        Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas. " + paths.length, Toast.LENGTH_LONG).show();
+        File file;
+
+        for (int i = 0; i < paths.length; i++) {
+            file = new File(paths[i]);
+            if (!file.delete()) {
+                Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        Toast.makeText(this, "Grabaciones eliminadas.", Toast.LENGTH_SHORT).show();
     }
 
     /**
