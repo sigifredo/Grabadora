@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.InteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -97,8 +97,13 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(id)).commit();
+    public void play(String path) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(path)).commit();
+    }
+
+    @Override
+    public void deleteRecords(String [] paths) {
+        Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas.", Toast.LENGTH_SHORT).show();
     }
 
     /**

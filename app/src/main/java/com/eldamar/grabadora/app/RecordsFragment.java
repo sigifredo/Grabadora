@@ -21,7 +21,7 @@ import android.widget.ListView;
  */
 public class RecordsFragment extends ListFragment {
 
-    private OnFragmentInteractionListener mListener;
+    private InteractionListener mListener;
 
     public RecordsFragment() {
     }
@@ -64,7 +64,14 @@ public class RecordsFragment extends ListFragment {
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                return false;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_delete:
+                        mListener.deleteRecords(null);
+                        actionMode.finish();
+                        return true;
+                    default:
+                        return false;
+                }
             }
 
             @Override
@@ -77,10 +84,10 @@ public class RecordsFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (InteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                + " must implement OnFragmentInteractionListener");
+                + " must implement InteractionListener");
         }
     }
 
@@ -93,21 +100,11 @@ public class RecordsFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        mListener.onFragmentInteraction(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
+        mListener.play(getActivity().getFilesDir().getAbsolutePath() + "/" + l.getItemAtPosition(position).toString());
     }
 
-    /**
-    * This interface must be implemented by activities that contain this
-    * fragment to allow an interaction in this fragment to be communicated
-    * to the activity and potentially other fragments contained in that
-    * activity.
-    * <p>
-    * See the Android Training lesson <a href=
-    * "http://developer.android.com/training/basics/fragments/communicating.html"
-    * >Communicating with Other Fragments</a> for more information.
-    */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+    public interface InteractionListener {
+        public void play(String path);
+        public void deleteRecords(String [] paths);
     }
 }
