@@ -3,6 +3,8 @@ package com.eldamar.grabadora.app;
 import java.io.File;
 import java.io.IOException;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -40,6 +43,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         mButton = (Button) view.findViewById(R.id.button);
         mButton.setOnClickListener(this);
         mChronometer = (Chronometer) view.findViewById(R.id.chronometer);
+        mFile = null;
         mRecorder = null;
 
         return view;
@@ -76,10 +80,38 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             mChronometer.stop();
             mChronometer.setBase(SystemClock.elapsedRealtime());
 
-            // TODO: Cerrar el archivo temporal.
-            Intent intent = new Intent(getActivity(), SaveFileActivity.class);
-            intent.putExtra("mFilePath", mFile.getAbsolutePath());
-            startActivity(intent);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View dialogSave = getActivity().getLayoutInflater().inflate(R.layout.dialog_save, null);
+            final EditText et = (EditText) dialogSave.findViewById(R.id.editText);
+            builder.setView(dialogSave)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int iButton) {
+                            String fileName = et.getText().toString().trim();
+
+                            if (fileName.isEmpty()) {
+                                // TODO: no cerrar el diálogo.
+                                Toast.makeText(getActivity(), "El nombre del archivo no es correcto.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // TODO: obtener la verdadera extensión.
+                                if (!fileName.contains(".3pg"))
+                                    fileName = fileName + ".3pg";
+
+                                File oFile = new File(getActivity().getFilesDir(), fileName);
+
+                                if (mFile.renameTo(oFile))
+                                    Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente." + oFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                                else
+                                    Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int iButton) {
+                            mFile.delete();
+                            mFile = null;
+                        }
+                    })
+                    .create().show();
         }
     }
 }
