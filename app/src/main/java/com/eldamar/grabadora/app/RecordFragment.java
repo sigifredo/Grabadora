@@ -99,9 +99,9 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                                 File oFile = new File(getActivity().getFilesDir(), fileName);
 
                                 if (mFile.renameTo(oFile))
-                                    Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
                                 else
-                                    Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     })
