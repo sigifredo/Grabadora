@@ -29,12 +29,16 @@ public class RecordsFragment extends ListFragment {
     public RecordsFragment() {
     }
 
+    public void loadFiles() {
+        String [] files = getActivity().fileList();
+        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, files));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String [] files = getActivity().fileList();
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, files));
+        loadFiles();
     }
 
     @Override
@@ -86,6 +90,7 @@ public class RecordsFragment extends ListFragment {
                             paths[i++] = activityPath + getListAdapter().getItem(it.next());
 
                         mListener.deleteRecords(paths);
+                        loadFiles();
                         actionMode.finish();
                         return true;
                     default:
