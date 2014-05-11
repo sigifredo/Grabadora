@@ -1,6 +1,8 @@
 package com.eldamar.grabadora.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ActionMode;
@@ -81,16 +83,26 @@ public class RecordsFragment extends ListFragment {
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_delete:
-                        int i = 0;
-                        Iterator<Integer> it = mItems.iterator();
-                        String [] paths = new String[mItems.size()];
-                        final String activityPath = getActivity().getFilesDir().getAbsolutePath() + "/";
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("¿Está seguro de querer eliminar las grabaciones?")
+                                .setTitle("Eliminar archivos")
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int iButton) {
+                                        int i = 0;
+                                        Iterator<Integer> it = mItems.iterator();
+                                        String [] paths = new String[mItems.size()];
+                                        final String activityPath = getActivity().getFilesDir().getAbsolutePath() + "/";
 
-                        while (it.hasNext())
-                            paths[i++] = activityPath + getListAdapter().getItem(it.next());
+                                        while (it.hasNext())
+                                            paths[i++] = activityPath + getListAdapter().getItem(it.next());
 
-                        mListener.deleteRecords(paths);
-                        loadFiles();
+                                        mListener.deleteRecords(paths);
+                                        loadFiles();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create().show();
                         actionMode.finish();
                         return true;
                     default:
