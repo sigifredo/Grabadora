@@ -100,6 +100,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
                             File oFile = new File(getActivity().getFilesDir(), fileName);
 
+                            // TODO: revisar que el archivo no exista
                             if (mFile.renameTo(oFile))
                                 Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
                             else
