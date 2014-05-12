@@ -1,26 +1,24 @@
 package com.eldamar.grabadora.app;
 
-import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.InteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -46,23 +44,27 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
-    }
+        Fragment fragment;
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
+        switch(position) {
+            case 0:
                 mTitle = getString(R.string.title_section1);
+                fragment = new RecordFragment();
                 break;
-            case 2:
+            case 1:
                 mTitle = getString(R.string.title_section2);
+                fragment = new RecordsFragment();
                 break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
+            default:
+                fragment = new PlaceholderFragment();
+                Bundle args = new Bundle();
+                args.putInt("section_number", position + 1);
+                fragment.setArguments(args);
+                mTitle = getString(R.string.not_implemented_yet);
         }
+
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     public void restoreActionBar() {
@@ -96,6 +98,25 @@ public class MainActivity extends ActionBarActivity
             return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void play(String path) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(path)).commit();
+    }
+
+    @Override
+    public void deleteRecords(String [] paths) {
+        File file;
+
+        for (int i = 0; i < paths.length; i++) {
+            file = new File(paths[i]);
+            if (!file.delete()) {
+                Toast.makeText(this, "No se han podido eliminar las grabaciones seleccionadas.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        Toast.makeText(this, "Grabaciones eliminadas.", Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -106,22 +127,6 @@ public class MainActivity extends ActionBarActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            if (sectionNumber == 1) {
-                return null;
-            } else {
-                PlaceholderFragment fragment = new PlaceholderFragment();
-                Bundle args = new Bundle();
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber + 1);
-                fragment.setArguments(args);
-                return fragment;
-            }
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -130,12 +135,13 @@ public class MainActivity extends ActionBarActivity
             return rootView;
         }
 
+        /*
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+        */
     }
-
 }
