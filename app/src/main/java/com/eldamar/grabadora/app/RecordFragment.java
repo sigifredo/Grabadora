@@ -2,10 +2,11 @@ package com.eldamar.grabadora.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -84,25 +85,24 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             View dialogSave = getActivity().getLayoutInflater().inflate(R.layout.dialog_save, null);
             final EditText et = (EditText) dialogSave.findViewById(R.id.editText);
             builder.setView(dialogSave)
+                    .setCancelable(false)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int iButton) {
                             String fileName = et.getText().toString().trim();
 
-                            if (fileName.isEmpty()) {
-                                // TODO: no cerrar el diálogo.
-                                Toast.makeText(getActivity(), "El nombre del archivo no es correcto.", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // TODO: obtener la verdadera extensión.
-                                if (!fileName.contains(".3pg"))
-                                    fileName = fileName + ".3pg";
+                            if (fileName.isEmpty())
+                                fileName = DateFormat.getDateTimeInstance().format(new Date());
 
-                                File oFile = new File(getActivity().getFilesDir(), fileName);
+                            // TODO: obtener la verdadera extensión.
+                            if (!fileName.contains(".3pg"))
+                                fileName = fileName + ".3pg";
 
-                                if (mFile.renameTo(oFile))
-                                    Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
-                                else
-                                    Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
-                            }
+                            File oFile = new File(getActivity().getFilesDir(), fileName);
+
+                            if (mFile.renameTo(oFile))
+                                Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
