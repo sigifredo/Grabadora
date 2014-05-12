@@ -82,9 +82,10 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             mChronometer.setBase(SystemClock.elapsedRealtime());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            View dialogSave = getActivity().getLayoutInflater().inflate(R.layout.dialog_save, null);
-            final EditText et = (EditText) dialogSave.findViewById(R.id.editText);
-            builder.setView(dialogSave)
+            final EditText et = new EditText(getActivity());
+            builder.setView(et)
+                    .setTitle("Guardar archivo")
+                    .setMessage("Nombre del archivo")
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int iButton) {
