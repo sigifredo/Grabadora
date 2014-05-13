@@ -1,4 +1,4 @@
-package com.eldamar.grabadora.app;
+package com.caguapp.grabadora.app;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;

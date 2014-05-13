@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_drawable"
-    tools:context="com.eldamar.grabadora.app.MainActivity">
+    tools:context="com.caguapp.grabadora.app.MainActivity">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -26,6 +26,6 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="com.eldamar.grabadora.app.NavigationDrawerFragment" />
+        android:name="com.caguapp.grabadora.app.NavigationDrawerFragment" />
 
 </android.support.v4.widget.DrawerLayout>

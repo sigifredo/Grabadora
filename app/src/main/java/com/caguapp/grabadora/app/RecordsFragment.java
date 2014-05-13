@@ -1,4 +1,4 @@
-package com.eldamar.grabadora.app;
+package com.caguapp.grabadora.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;

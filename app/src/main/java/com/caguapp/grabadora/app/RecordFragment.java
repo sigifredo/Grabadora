@@ -1,4 +1,4 @@
-package com.eldamar.grabadora.app;
+package com.caguapp.grabadora.app;
 
 import java.io.File;
 import java.io.IOException;
