@@ -16,33 +16,25 @@
         android:layout_alignParentTop="true"
         android:textSize="60dp" />
 
-    <TextView
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Formato:"
-        android:id="@+id/tv1"
-        android:layout_below="@+id/chronometer" />
-
-    <RadioGroup
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/tv1"
+        android:layout_below="@+id/chronometer"
         android:orientation="horizontal"
-        android:id="@+id/radioGroup">
+        android:id="@+id/radioGroup"
+        android:layout_centerHorizontal="true">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3pg"
-            android:id="@+id/rb3pg"
-            android:layout_gravity="center_vertical" />
+            android:id="@+id/rb3pg" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="mp3"
-            android:id="@+id/rbmp3"
-            android:layout_gravity="center_vertical" />
+            android:id="@+id/rbmp3" />
     </RadioGroup>
 
     <Button
@@ -54,6 +46,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:shadowRadius="2"
+        android:shadowColor="#000000"
+        android:background="@drawable/background_drawable" />
 
 </RelativeLayout>
