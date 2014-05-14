@@ -6,7 +6,9 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 
@@ -31,6 +34,11 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     private Chronometer mChronometer;
     private File mFile;
     private MediaRecorder mRecorder;
+    private RadioButton m3pg;
+    private RadioButton mMp3;
+
+    public final static int F_3PG = 1;
+    public final static int F_MP3 = 2;
 
     public RecordFragment() {
         // Required empty public constructor
@@ -42,25 +50,43 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
 
         mButton = (Button) view.findViewById(R.id.button);
-        mButton.setOnClickListener(this);
         mChronometer = (Chronometer) view.findViewById(R.id.chronometer);
+        m3pg = (RadioButton) view.findViewById(R.id.rb3pg);
+        mMp3 = (RadioButton) view.findViewById(R.id.rbmp3);
+
+        mButton.setOnClickListener(this);
         mFile = null;
         mRecorder = null;
+
+        int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", F_3PG);
+
+        if (format == F_3PG)
+            m3pg.setChecked(true);
+        else if (format == F_MP3 )
+            mMp3.setChecked(true);
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
+        boolean b3pg = m3pg.isChecked();
+        final String format = b3pg?".3pg":".mp3";
+
         if (mRecorder == null) {
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+
+            if (b3pg)
+                mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            else
+                mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
             try {
                 mChronometer.setBase(SystemClock.elapsedRealtime());
-                mFile = File.createTempFile("tmp", ".3pg");
+                mFile = File.createTempFile("tmp", format);
                 mRecorder.setOutputFile(mFile.getAbsolutePath());
                 mRecorder.prepare();
                 mRecorder.start();
@@ -94,9 +120,8 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                             if (fileName.isEmpty())
                                 fileName = DateFormat.getDateTimeInstance().format(new Date());
 
-                            // TODO: obtener la verdadera extensión.
-                            if (!fileName.contains(".3pg"))
-                                fileName = fileName + ".3pg";
+                            if (!fileName.contains(format))
+                                fileName = fileName + format;
 
                             File oFile = new File(getActivity().getFilesDir(), fileName);
 

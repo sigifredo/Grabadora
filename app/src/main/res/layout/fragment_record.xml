@@ -13,16 +13,47 @@
         android:layout_height="wrap_content"
         android:id="@+id/chronometer"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button"
-        android:textSize="60dp"
-        android:padding="30dp" />
+        android:layout_alignParentTop="true"
+        android:textSize="60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formato:"
+        android:id="@+id/tv1"
+        android:layout_below="@+id/chronometer" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/tv1"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3pg"
+            android:id="@+id/rb3pg"
+            android:layout_gravity="center_vertical" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mp3"
+            android:id="@+id/rbmp3"
+            android:layout_gravity="center_vertical" />
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/record"
         android:id="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
