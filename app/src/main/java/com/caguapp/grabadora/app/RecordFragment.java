@@ -8,7 +8,6 @@ import java.util.Date;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -62,7 +61,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
         if (format == F_3PG)
             m3pg.setChecked(true);
-        else if (format == F_MP3 )
+        else if (format == F_MP3)
             mMp3.setChecked(true);
 
         return view;
