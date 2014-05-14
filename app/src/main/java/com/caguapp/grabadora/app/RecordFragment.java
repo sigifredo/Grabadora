@@ -8,6 +8,7 @@ import java.util.Date;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -63,6 +65,22 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             m3pg.setChecked(true);
         else if (format == F_MP3)
             mMp3.setChecked(true);
+
+        m3pg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    saveFormat(F_3PG);
+            }
+        });
+
+        mMp3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    saveFormat(F_MP3);
+            }
+        });
 
         return view;
     }
@@ -139,5 +157,11 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                     })
                     .create().show();
         }
+    }
+
+    public void saveFormat(int format) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).edit();
+        editor.putInt("format", format);
+        editor.commit();
     }
 }
