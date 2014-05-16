@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -47,6 +48,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
 
@@ -83,6 +85,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         });
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     @Override

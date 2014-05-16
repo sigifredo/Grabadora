@@ -46,11 +46,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ffffff"
-        android:textSize="30dp"
-        android:shadowRadius="2"
-        android:shadowColor="#000000"
-        android:background="@drawable/background_drawable" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
