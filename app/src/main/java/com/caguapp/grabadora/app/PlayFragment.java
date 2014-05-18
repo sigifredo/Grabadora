@@ -89,4 +89,12 @@ public class PlayFragment extends Fragment implements View.OnClickListener, Runn
             }
         }
     }
+
+    public String getFilePath() {
+        return mFilePath;
+    }
+
+    public void setFilePath(String filePath) {
+        mFilePath = filePath;
+    }
 }
