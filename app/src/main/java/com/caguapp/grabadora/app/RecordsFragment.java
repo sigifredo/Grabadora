@@ -3,6 +3,8 @@ package com.caguapp.grabadora.app;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ActionMode;
@@ -14,6 +16,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -104,6 +108,22 @@ public class RecordsFragment extends ListFragment {
                                 .setNegativeButton(android.R.string.cancel, null)
                                 .create().show();
                         actionMode.finish();
+                        return true;
+                    case R.id.action_share:
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                        ArrayList<Uri> uris = new ArrayList<Uri>();
+                        final String recordsPath = getActivity().getFilesDir().getAbsolutePath() + "/";
+                        Iterator<Integer> it = mItems.iterator();
+
+                        while (it.hasNext()) {
+                            String name = (String) getListAdapter().getItem(it.next());
+                            uris.add(Uri.fromFile(new File(recordsPath + name)));
+                        }
+
+                        shareIntent.setType("audio/*");
+                        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, uris);
+                        startActivity(Intent.createChooser(shareIntent, "Share Caguapp"));
                         return true;
                     default:
                         return false;

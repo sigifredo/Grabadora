@@ -17,6 +17,7 @@
     <string name="cancel">Cancelar</string>
     <string name="not_implemented_yet">No implementado aún</string>
     <string name="delete">Eliminar</string>
+    <string name="share">Compartir</string>
     <string name="select_items">Selección de archivos</string>
     <string name="file_selected">archivo seleccionado</string>
     <string name="files_selected">archivos seleccionados</string>
