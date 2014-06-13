@@ -15,13 +15,12 @@
     <string name="file_name">Nombre del archivo:</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
-    <string name="not_implemented_yet">No implementado aún</string>
     <string name="delete">Eliminar</string>
     <string name="share">Compartir</string>
     <string name="select_items">Selección de archivos</string>
     <string name="file_selected">archivo seleccionado</string>
     <string name="files_selected">archivos seleccionados</string>
     <string name="title_activity_play">PlayActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="about">Acerca de</string>
 
 </resources>

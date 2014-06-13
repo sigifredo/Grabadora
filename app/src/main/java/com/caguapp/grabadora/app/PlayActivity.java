@@ -38,7 +38,7 @@ public class PlayActivity extends ActionBarActivity implements Runnable {
             mMediaPlayer = null;
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -57,7 +57,7 @@ public class PlayActivity extends ActionBarActivity implements Runnable {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void start(View view) {
         if (mMediaPlayer == null)
             Toast.makeText(this, "No se ha podido reproducir el archivo", Toast.LENGTH_LONG).show();

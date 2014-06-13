@@ -67,16 +67,19 @@ public class MainActivity extends ActionBarActivity
                         .setPositiveButton(android.R.string.yes, null)
                         .create().show();
                 break;
-            default:
-                fragment = new PlaceholderFragment();
-                Bundle args = new Bundle();
-                args.putInt("section_number", position + 1);
-                fragment.setArguments(args);
-                mTitle = getString(R.string.not_implemented_yet);
         }
 
         if (fragment != null)
             fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_about) {
+            Toast.makeText(this, "Acerca de...", Toast.LENGTH_LONG).show();
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
     }
 
     public void restoreActionBar() {
@@ -88,26 +91,15 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        if (mNavigationDrawerFragment.isDrawerOpen())
+            return super.onCreateOptionsMenu(menu);
+        else {
             restoreActionBar();
             return true;
         }
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (item.getItemId() == R.id.action_settings)
-            return true;
-        else
-            return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -130,33 +122,5 @@ public class MainActivity extends ActionBarActivity
             }
         }
         Toast.makeText(this, "Grabaciones eliminadas.", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-
-        /*
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-        */
     }
 }
