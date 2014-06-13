@@ -21,5 +21,7 @@
     <string name="select_items">Selección de archivos</string>
     <string name="file_selected">archivo seleccionado</string>
     <string name="files_selected">archivos seleccionados</string>
+    <string name="title_activity_play">PlayActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

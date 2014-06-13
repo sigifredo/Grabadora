@@ -1,5 +1,6 @@
 package com.caguapp.grabadora.app;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -101,7 +102,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void play(String path) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(path)).commit();
+        Intent intent = new Intent(this, PlayActivity.class);
+        intent.putExtra("filePath", path);
+        startActivity(intent);
+        // getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlayFragment(path)).commit();
     }
 
     @Override
