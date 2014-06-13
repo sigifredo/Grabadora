@@ -1,5 +1,6 @@
 package com.caguapp.grabadora.app;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -47,7 +48,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment;
+        Fragment fragment = null;
 
         switch(position) {
             case 0:
@@ -58,6 +59,14 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.title_section2);
                 fragment = new RecordsFragment();
                 break;
+            case 2:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("NullPoint")
+                        .setIcon(R.drawable.ic_launcher)
+                        .setMessage("Grabadora versión: 1.0.1")
+                        .setPositiveButton(android.R.string.yes, null)
+                        .create().show();
+                break;
             default:
                 fragment = new PlaceholderFragment();
                 Bundle args = new Bundle();
@@ -66,7 +75,8 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.not_implemented_yet);
         }
 
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        if (fragment != null)
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     public void restoreActionBar() {
