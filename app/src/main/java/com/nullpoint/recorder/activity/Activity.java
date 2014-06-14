@@ -1,9 +1,11 @@
-package com.caguapp.grabadora.app;
+package com.nullpoint.recorder.activity;
 
 import android.app.AlertDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.caguapp.grabadora.app.R;
 
 public class Activity extends ActionBarActivity {
 

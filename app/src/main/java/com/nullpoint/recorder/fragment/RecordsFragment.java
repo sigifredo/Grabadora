@@ -1,4 +1,4 @@
-package com.caguapp.grabadora.app;
+package com.nullpoint.recorder.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.caguapp.grabadora.app.R;
 
 import java.io.File;
 import java.util.ArrayList;

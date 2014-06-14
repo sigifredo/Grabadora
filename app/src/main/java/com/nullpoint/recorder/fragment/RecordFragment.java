@@ -1,4 +1,4 @@
-package com.caguapp.grabadora.app;
+package com.nullpoint.recorder.fragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +23,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.caguapp.grabadora.app.R;
 
 
 /**

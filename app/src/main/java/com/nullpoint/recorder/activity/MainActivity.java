@@ -1,21 +1,18 @@
-package com.caguapp.grabadora.app;
+package com.nullpoint.recorder.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nullpoint.recorder.fragment.NavigationDrawerFragment;
+import com.caguapp.grabadora.app.R;
+import com.nullpoint.recorder.fragment.RecordFragment;
+import com.nullpoint.recorder.fragment.RecordsFragment;
 
 import java.io.File;
 
@@ -60,33 +57,14 @@ public class MainActivity extends Activity
                 fragment = new RecordsFragment();
                 break;
             case 2:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("NullPoint")
-                        .setIcon(R.drawable.ic_launcher)
-                        .setMessage("Grabadora versión: 1.0.1")
-                        .setPositiveButton(android.R.string.yes, null)
-                        .create().show();
+                getAbout().show();
                 break;
         }
 
         if (fragment != null)
             fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_about) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("NullPoint")
-                    .setIcon(R.drawable.ic_launcher)
-                    .setMessage("Grabadora versión: 1.0.1")
-                    .setPositiveButton(android.R.string.yes, null)
-                    .create().show();
-            return true;
-        } else
-            return super.onOptionsItemSelected(item);
-    }
-*/
+
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
