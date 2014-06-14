@@ -27,9 +27,9 @@ public class Activity extends ActionBarActivity {
 
     public AlertDialog getAbout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("NullPoint")
+        builder.setTitle(R.string.team_name)
                 .setIcon(R.drawable.ic_launcher)
-                .setMessage("Grabadora versión: 1.0.1")
+                .setMessage(getString(R.string.version) + ": " + getString(R.string.version_number))
                 .setPositiveButton(android.R.string.yes, null);
 
         return builder.create();

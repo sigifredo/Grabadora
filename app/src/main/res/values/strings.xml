@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Grabadora</string>
+    <string name="team_name">NullPoint</string>
+    <string name="version">Versión</string>
+    <string name="version_number">0.1.1</string>
     <string name="title_section1">Grabar</string>
     <string name="title_section2">Grabaciones</string>
     <string name="title_section3">Configuración</string>
