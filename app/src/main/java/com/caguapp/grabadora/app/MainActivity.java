@@ -20,7 +20,7 @@ import android.widget.Toast;
 import java.io.File;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, RecordsFragment.InteractionListener {
 
     /**
@@ -72,16 +72,21 @@ public class MainActivity extends ActionBarActivity
         if (fragment != null)
             fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_about) {
-            Toast.makeText(this, "Acerca de...", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("NullPoint")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setMessage("Grabadora versión: 1.0.1")
+                    .setPositiveButton(android.R.string.yes, null)
+                    .create().show();
             return true;
         } else
             return super.onOptionsItemSelected(item);
     }
-
+*/
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -91,15 +96,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        if (mNavigationDrawerFragment.isDrawerOpen())
-            return super.onCreateOptionsMenu(menu);
-        else {
+        if (!mNavigationDrawerFragment.isDrawerOpen())
             restoreActionBar();
-            return true;
-        }
 
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

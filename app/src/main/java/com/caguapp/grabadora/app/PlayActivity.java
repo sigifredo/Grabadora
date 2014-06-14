@@ -14,7 +14,7 @@ import com.caguapp.grabadora.app.R;
 
 import java.io.IOException;
 
-public class PlayActivity extends ActionBarActivity implements Runnable {
+public class PlayActivity extends Activity implements Runnable {
 
     private MediaPlayer mMediaPlayer;
     private SeekBar mSeekBar;
