@@ -16,9 +16,9 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="recorder_icon.svg"
-   inkscape:export-filename="/home/raziel/tmp/xxhdpi.png"
-   inkscape:export-xdpi="30.891621"
-   inkscape:export-ydpi="30.891621">
+   inkscape:export-filename="/home/raziel/tmp/mdpi.png"
+   inkscape:export-xdpi="109.84"
+   inkscape:export-ydpi="109.84">
   <defs
      id="defs4">
     <marker
@@ -137,7 +137,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

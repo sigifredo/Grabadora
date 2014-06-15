@@ -16,7 +16,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.caguapp.grabadora.app.R;
+import com.nullpoint.recorder.gui.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -125,7 +125,7 @@ public class RecordsFragment extends ListFragment {
                         shareIntent.setType("audio/*");
                         shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
                         shareIntent.putExtra(Intent.EXTRA_STREAM, uris);
-                        startActivity(Intent.createChooser(shareIntent, "Share Caguapp"));
+                        startActivity(Intent.createChooser(shareIntent, "Share Nullpoint"));
                         return true;
                     default:
                         return false;

@@ -7,8 +7,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.caguapp.grabadora.app.R;
-import com.nullpoint.recorder.activity.Activity;
+import com.nullpoint.recorder.gui.R;
 
 import java.io.IOException;
 

@@ -10,7 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
 import com.nullpoint.recorder.fragment.NavigationDrawerFragment;
-import com.caguapp.grabadora.app.R;
+import com.nullpoint.recorder.gui.R;
 import com.nullpoint.recorder.fragment.RecordFragment;
 import com.nullpoint.recorder.fragment.RecordsFragment;
 

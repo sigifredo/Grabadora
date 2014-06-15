@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.caguapp.grabadora.app.R;
+import com.nullpoint.recorder.gui.R;
 
 public class Activity extends ActionBarActivity {
 

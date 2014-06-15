@@ -24,7 +24,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.caguapp.grabadora.app.R;
+import com.nullpoint.recorder.gui.R;
 
 
 /**
