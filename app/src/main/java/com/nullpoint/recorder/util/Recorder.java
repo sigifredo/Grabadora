@@ -15,12 +15,31 @@ import com.nullpoint.recorder.exceptions.StartException;
 
 class Recorder {
 
-    private boolean mB3pg;
+    enum Format {Mp3, _3pg}
+
+    private Format mFormat;
     private Chronometer mChronometer;
     private File mFile;
     private MediaRecorder mRecorder;
 
     public Recorder() {
+    }
+
+    protected String formatString() {
+        String sFormat;
+
+        switch (mFormat) {
+        case _3pg:
+            sFormat = ".3pg";
+            break;
+        case Mp3:
+            sFormat = ".mp3";
+            break;
+        default:
+            sFormat = ".xxx";
+        }
+
+        return sFormat;
     }
 
     public boolean isRecording() {
@@ -33,11 +52,15 @@ class Recorder {
 
     public boolean saveRecord(String path) {
 
+        String sFormat;
+
         if (path.isEmpty())
             path = DateFormat.getDateTimeInstance().format(new Date());
 
-        if (!path.contains(format))
-            path = path + format;
+        sFormat = formatString();
+
+        if (!path.contains(sFormat))
+            path = path + sFormat;
 
         // File oFile = new File(getActivity().getFilesDir(), fileName);
         File oFile = new File(path);
@@ -56,14 +79,17 @@ class Recorder {
         if (isRecording()) {
             throw new StartException("Ya hay una grabación en curso.");
         } else {
-            final String format = mB3pg?".3pg":".mp3";
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
-            if (mB3pg)
+            switch (mFormat) {
+            case _3pg:
                 mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            else
+                break;
+            case Mp3:
                 mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                break;
+            }
 
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
