@@ -1,10 +1,6 @@
 package com.nullpoint.recorder.util;
 
-import android.app.AlertDialog;
 import android.media.MediaRecorder;
-import android.os.SystemClock;
-import android.widget.Chronometer;
-import android.widget.EditText;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +14,6 @@ class Recorder {
     enum Format {Mp3, _3pg}
 
     private Format mFormat;
-    private Chronometer mChronometer;
     private File mFile;
     private MediaRecorder mRecorder;
 
@@ -94,12 +89,10 @@ class Recorder {
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
             try {
-                mChronometer.setBase(SystemClock.elapsedRealtime());
-                mFile = File.createTempFile("tmp", format);
+                mFile = File.createTempFile("tmp", formatString());
                 mRecorder.setOutputFile(mFile.getAbsolutePath());
                 mRecorder.prepare();
                 mRecorder.start();
-                mChronometer.start();
             } catch (IOException exception) {
                 mRecorder = null;
                 throw new StartException("No se ha podido iniciar la grabación.");
@@ -112,13 +105,6 @@ class Recorder {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
-
-        mButton.setText(R.string.record);
-        mChronometer.stop();
-        mChronometer.setBase(SystemClock.elapsedRealtime());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final EditText et = new EditText(getActivity());
 
         /*
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

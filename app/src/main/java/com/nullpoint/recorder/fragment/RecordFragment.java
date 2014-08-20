@@ -99,9 +99,11 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         final String format = b3pg?".3pg":".mp3";
 
         if (mRecorder == null) {
-
+            mChronometer.setBase(SystemClock.elapsedRealtime());
+            mChronometer.start();
         } else {
-
+            mChronometer.stop();
+            mChronometer.setBase(SystemClock.elapsedRealtime());
         }
     }
 
