@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 
+import com.nullpoint.recorder.exceptions.SaveException;
 import com.nullpoint.recorder.exceptions.StartException;
 
 class Recorder {
@@ -18,6 +19,9 @@ class Recorder {
     private MediaRecorder mRecorder;
 
     public Recorder() {
+        mRecorder = null;
+        mFile = null;
+        //TODO: leer el formato de las propiedades.
     }
 
     protected String formatString() {
@@ -37,16 +41,19 @@ class Recorder {
         return sFormat;
     }
 
-    public boolean isRecording() {
-        return false;
+    public Format getFormat() {
+        return mFormat;
     }
 
-    public boolean saveRecord() {
+    public boolean isRecording() {
+        return (mRecorder != null);
+    }
+
+    public boolean saveRecord() throws SaveException {
         return saveRecord("");
     }
 
-    public boolean saveRecord(String path) {
-
+    public boolean saveRecord(String path) throws SaveException {
         String sFormat;
 
         if (path.isEmpty())
@@ -60,20 +67,32 @@ class Recorder {
         // File oFile = new File(getActivity().getFilesDir(), fileName);
         File oFile = new File(path);
 
-        mFile.setReadable(true, false);
-        // TODO: revisar que el archivo no exista
-        if (mFile.renameTo(oFile))
-            // Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
-            return true;
-        else
-            // Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
-            return false;
+        if (oFile.exists()) {
+            throw new SaveException("El archivo ya existe");
+        } else {
+            mFile.setReadable(true, false);
+            if (mFile.renameTo(oFile))
+                // Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
+                return true;
+            else
+                // Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
+                return false;
+        }
+    }
+
+    public void setFormat(Format mFormat) {
+        this.mFormat = mFormat;
     }
 
     public void startRecord() throws StartException {
         if (isRecording()) {
             throw new StartException("Ya hay una grabación en curso.");
         } else {
+            if (mFile != null) {
+                mFile.delete();
+                mFile = null;
+            }
+
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
@@ -95,6 +114,7 @@ class Recorder {
                 mRecorder.start();
             } catch (IOException exception) {
                 mRecorder = null;
+                mFile = null;
                 throw new StartException("No se ha podido iniciar la grabación.");
                 // Toast.makeText(getActivity(), "No se ha podido iniciar la grabación.", Toast.LENGTH_SHORT).show();
             }
