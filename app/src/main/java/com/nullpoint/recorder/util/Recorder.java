@@ -21,7 +21,6 @@ public class Recorder {
     public Recorder() {
         mRecorder = null;
         mFile = null;
-        //TODO: leer el formato de las propiedades.
         mFormat = Format.Mp3;
     }
 
@@ -122,7 +121,6 @@ public class Recorder {
                 mRecorder = null;
                 mFile = null;
                 throw new StartException("No se ha podido iniciar la grabación.");
-                // Toast.makeText(getActivity(), "No se ha podido iniciar la grabación.", Toast.LENGTH_SHORT).show();
             }
         }
     }
