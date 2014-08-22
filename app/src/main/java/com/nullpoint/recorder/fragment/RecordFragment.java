@@ -86,8 +86,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             mChronometer.stop();
             mRecorder.stopRecord();
             mButton.setText(R.string.record);
-
-            //TODO: Verificar que la siguiente linea sea necesaria.
             mChronometer.setBase(SystemClock.elapsedRealtime());
 
             SaveRecordDialog saveRecordDialog = new SaveRecordDialog(getActivity());
