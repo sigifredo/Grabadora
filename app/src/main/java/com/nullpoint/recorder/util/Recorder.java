@@ -12,7 +12,7 @@ import com.nullpoint.recorder.exceptions.StartException;
 
 public class Recorder {
 
-    public enum Format {Mp3, _3pg}
+    public enum Format {_3pg, Mp3}
 
     private Format mFormat;
     private File mFile;

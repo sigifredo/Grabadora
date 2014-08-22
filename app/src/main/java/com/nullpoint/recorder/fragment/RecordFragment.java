@@ -112,7 +112,14 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     }
 
     public Recorder.Format getFormatFromPreferences() {
-        int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", Recorder.Format._3pg.ordinal());
-        return Recorder.Format.values()[format];
+        int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", -1);
+        if (format == -1) {
+            Recorder.Format recorderFormat = Recorder.Format.values()[0];
+
+            changeFormat(recorderFormat);
+
+            return recorderFormat;
+        } else
+            return Recorder.Format.values()[--format];
     }
 }
