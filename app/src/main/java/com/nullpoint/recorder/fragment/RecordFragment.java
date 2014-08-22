@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.nullpoint.recorder.exceptions.StartException;
 import com.nullpoint.recorder.gui.R;
@@ -26,15 +27,9 @@ import com.nullpoint.recorder.util.Recorder;
  */
 public class RecordFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Crear una propioa clase MediaRecorder.
     private Button mButton;
     private Chronometer mChronometer;
     private Recorder mRecorder;
-    private RadioButton m3pg;
-    private RadioButton mMp3;
-
-    public final static int F_3PG = 1;
-    public final static int F_MP3 = 2;
 
     public RecordFragment() {
     }
@@ -42,29 +37,29 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
 
         mButton = (Button) view.findViewById(R.id.button);
         mChronometer = (Chronometer) view.findViewById(R.id.chronometer);
-        m3pg = (RadioButton) view.findViewById(R.id.rb3pg);
-        mMp3 = (RadioButton) view.findViewById(R.id.rbmp3);
+        RadioButton m3pg = (RadioButton) view.findViewById(R.id.rb3pg);
+        RadioButton mMp3 = (RadioButton) view.findViewById(R.id.rbmp3);
 
-        mButton.setOnClickListener(this);
         mRecorder = new Recorder();
 
-        int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", F_3PG);
+        Recorder.Format format = getFormatFromPreferences();
+        mButton.setOnClickListener(this);
+        mRecorder.setFormat(format);
 
-        if (format == F_3PG)
+        if (format == Recorder.Format._3pg)
             m3pg.setChecked(true);
-        else if (format == F_MP3)
+        else if (format == Recorder.Format.Mp3)
             mMp3.setChecked(true);
 
         m3pg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b)
-                    saveFormat(F_3PG);
+                    changeFormat(Recorder.Format._3pg);
             }
         });
 
@@ -72,7 +67,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b)
-                    saveFormat(F_MP3);
+                    changeFormat(Recorder.Format.Mp3);
             }
         });
 
@@ -87,9 +82,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        boolean b3pg = m3pg.isChecked();
-        final String format = b3pg?".3pg":".mp3";
-
         if (mRecorder.isRecording()) {
             mChronometer.stop();
             mRecorder.stopRecord();
@@ -102,18 +94,25 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             saveRecordDialog.show();
         } else {
             try {
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                mChronometer.start();
                 mRecorder.startRecord();
             } catch (StartException e) {
-                e.printStackTrace();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            mChronometer.setBase(SystemClock.elapsedRealtime());
-            mChronometer.start();
         }
     }
 
-    public void saveFormat(int format) {
+    public void changeFormat(Recorder.Format format) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).edit();
-        editor.putInt("format", format);
-        editor.commit();
+        editor.putInt("format", format.ordinal());
+        editor.apply();
+
+        mRecorder.setFormat(format);
+    }
+
+    public Recorder.Format getFormatFromPreferences() {
+        int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", Recorder.Format._3pg.ordinal());
+        return Recorder.Format.values()[format];
     }
 }
