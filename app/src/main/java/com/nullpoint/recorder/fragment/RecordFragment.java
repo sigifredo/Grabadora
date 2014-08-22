@@ -1,12 +1,6 @@
 package com.nullpoint.recorder.fragment;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.util.Date;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -18,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
+import com.nullpoint.recorder.exceptions.StartException;
 import com.nullpoint.recorder.gui.R;
+import com.nullpoint.recorder.gui.SaveRecordDialog;
+import com.nullpoint.recorder.util.Recorder;
 
 
 /**
@@ -34,8 +29,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     // TODO: Crear una propioa clase MediaRecorder.
     private Button mButton;
     private Chronometer mChronometer;
-    private File mFile;
-    private MediaRecorder mRecorder;
+    private Recorder mRecorder;
     private RadioButton m3pg;
     private RadioButton mMp3;
 
@@ -43,7 +37,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     public final static int F_MP3 = 2;
 
     public RecordFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -58,8 +51,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         mMp3 = (RadioButton) view.findViewById(R.id.rbmp3);
 
         mButton.setOnClickListener(this);
-        mFile = null;
-        mRecorder = null;
+        mRecorder = new Recorder();
 
         int format = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE).getInt("format", F_3PG);
 
@@ -98,12 +90,24 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         boolean b3pg = m3pg.isChecked();
         final String format = b3pg?".3pg":".mp3";
 
-        if (mRecorder == null) {
+        if (mRecorder.isRecording()) {
+            mChronometer.stop();
+            mRecorder.stopRecord();
+            mButton.setText(R.string.record);
+
+            //TODO: Verificar que la siguiente linea sea necesaria.
+            mChronometer.setBase(SystemClock.elapsedRealtime());
+
+            SaveRecordDialog saveRecordDialog = new SaveRecordDialog(getActivity());
+            saveRecordDialog.show();
+        } else {
+            try {
+                mRecorder.startRecord();
+            } catch (StartException e) {
+                e.printStackTrace();
+            }
             mChronometer.setBase(SystemClock.elapsedRealtime());
             mChronometer.start();
-        } else {
-            mChronometer.stop();
-            mChronometer.setBase(SystemClock.elapsedRealtime());
         }
     }
 

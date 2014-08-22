@@ -10,7 +10,7 @@ import java.util.Date;
 import com.nullpoint.recorder.exceptions.SaveException;
 import com.nullpoint.recorder.exceptions.StartException;
 
-class Recorder {
+public class Recorder {
 
     enum Format {Mp3, _3pg}
 
@@ -22,6 +22,14 @@ class Recorder {
         mRecorder = null;
         mFile = null;
         //TODO: leer el formato de las propiedades.
+        mFormat = Format.Mp3;
+    }
+
+    public void clearCache() {
+        if (mFile != null) {
+            mFile.delete();
+            mFile = null;
+        }
     }
 
     protected String formatString() {
@@ -72,10 +80,8 @@ class Recorder {
         } else {
             mFile.setReadable(true, false);
             if (mFile.renameTo(oFile))
-                // Toast.makeText(getActivity(), "Se ha guardaro el archivo satisfactoriamente.", Toast.LENGTH_SHORT).show();
                 return true;
             else
-                // Toast.makeText(getActivity(), "Ha ocurrido un problema, y el archivo no pudo ser guardado.", Toast.LENGTH_SHORT).show();
                 return false;
         }
     }
@@ -122,18 +128,10 @@ class Recorder {
     }
 
     public void stopRecord() {
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
-
-        /*
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int iButton) {
-                        mFile.delete();
-                        mFile = null;
-                    }
-                })
-                .create().show();
-        */
+        if (mRecorder != null) {
+            mRecorder.stop();
+            mRecorder.release();
+            mRecorder = null;
+        }
     }
 }
