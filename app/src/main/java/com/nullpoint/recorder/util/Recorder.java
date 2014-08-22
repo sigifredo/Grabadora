@@ -4,8 +4,6 @@ import android.media.MediaRecorder;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 
 import com.nullpoint.recorder.exceptions.SaveException;
 import com.nullpoint.recorder.exceptions.StartException;
@@ -56,17 +54,8 @@ public class Recorder {
         return (mRecorder != null);
     }
 
-    public boolean saveRecord() throws SaveException {
-        return saveRecord("");
-    }
-
     public boolean saveRecord(String path) throws SaveException {
-        String sFormat;
-
-        if (path.isEmpty())
-            path = DateFormat.getDateTimeInstance().format(new Date());
-
-        sFormat = formatString();
+        String sFormat = formatString();
 
         if (!path.contains(sFormat))
             path = path + sFormat;
