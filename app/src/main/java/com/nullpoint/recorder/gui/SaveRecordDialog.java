@@ -49,10 +49,13 @@ public class SaveRecordDialog extends AlertDialog {
         }
 
         protected void save() {
+            String dir = mDialog.getContext().getFilesDir() + "/";
             String fileName = mDialog.mEditText.getText().toString().trim();
 
             if (fileName.isEmpty())
-                fileName = DateFormat.getDateTimeInstance().format(new Date());
+                fileName = dir + DateFormat.getDateTimeInstance().format(new Date());
+            else
+                fileName = dir + fileName;
 
             try {
                 if (mDialog.mRecorder.saveRecord(fileName))

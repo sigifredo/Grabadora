@@ -66,8 +66,7 @@ public class Recorder {
         if (oFile.exists()) {
             throw new SaveException("El archivo ya existe");
         } else {
-            mFile.setReadable(true, false);
-            if (mFile.renameTo(oFile))
+            if (mFile.setReadable(true, false) && mFile.renameTo(oFile))
                 return true;
             else
                 return false;
@@ -120,5 +119,13 @@ public class Recorder {
             mRecorder.release();
             mRecorder = null;
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        if (isRecording())
+            stopRecord();
+        clearCache();
+        super.finalize();
     }
 }
